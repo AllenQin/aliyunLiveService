@@ -40,7 +40,11 @@ class AliyunLiveService
     }
 
     /**
-     * 配置
+     * get aliyun config
+     *
+     * @todo get data from config file
+     * 
+     * @return array
      */
     private function getConfig()
     {
