@@ -40,6 +40,25 @@ class AliyunLiveService
     }
 
     /**
+     * use the correct time zone time stamp
+     *
+     * @return string
+     */
+    private function getUTCTimeStamp()
+    {
+        $defaultTimeZone = date_default_timezone_get();
+        if ($defaultTimeZone == 'UTC') {
+            return time();
+        }
+
+        date_default_timezone_set('UTC');
+        $timeStamp = time();
+        date_default_timezone_set($defaultTimeZone);
+
+        return $timeStamp;
+    }
+
+    /**
      * get aliyun config
      *
      * @todo get data from config file
@@ -116,8 +135,8 @@ class AliyunLiveService
         $request->setActionName('DescribeLiveStreamsPublishList');
         $request->setDomainName($this->getDomainName());
         $request->setAppName($this->getAppName());
-        $request->setStartTime(date('Y-m-d\TH:i:s\Z', time() - 86400 * 10));
-        $request->setEndTime(date('Y-m-d\TH:i:s\Z', time()));
+        $request->setStartTime(date('Y-m-d\TH:i:s\Z', $this->getUTCTimeStamp() - 86400 * 10));
+        $request->setEndTime(date('Y-m-d\TH:i:s\Z', $this->getUTCTimeStamp()));
         $response = $this->getClient()->getAcsResponse($request);
         if ($response && $response = json_decode(json_encode($response), true)) {
             $data = [
