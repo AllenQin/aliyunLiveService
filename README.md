@@ -7,7 +7,7 @@
 ## 安装依赖
 ```shell
 
-composer require 'allenqin/aliyun-openapi-php-sdk:v1.1.6'
+composer require 'allenqin/aliyun-openapi-php-sdk:v1.1.7'
 
 ```
 
